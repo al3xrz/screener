@@ -14,6 +14,7 @@ app.use(cors());
 app.use("/map", viewRouter);
 app.use("/api", apiRouter);
 
+
 app.listen(process.env.EXPRESS_PORT, () => {
   console.log(`Server started on ${process.env.EXPRESS_PORT}`);
 });

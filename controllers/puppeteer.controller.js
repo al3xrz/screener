@@ -7,8 +7,8 @@ async function createScreenshot() {
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
-  // await page.goto(`http://127.0.0.1:${process.env.EXPRESS_PORT}/map`);
-  await page.goto(`http://127.0.0.1:3000/`);
+  await page.goto(`http://127.0.0.1:${process.env.EXPRESS_PORT}`);
+  // await page.goto(`http://127.0.0.1:3000/`);
   await page.waitForSelector(".leaflet-popup-content", {
     visible: true,
   });

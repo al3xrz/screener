@@ -42,15 +42,19 @@ export default function Markers(props) {
   });
 
   useEffect(() => {
-    if (props.complexes.length !== 0) {
-      console.log(props.hostid);
+    if (props.complexes.length !== 0 && props.hostid !== 0) {
+      console.log("props.hostid", props.hostid);
+      console.log("props.complex", props.complexes);
+
       const selected = props.complexes.find(
         (complex) => complex.hostid === props.hostid
       );
-      map.setView(
-        [selected.inventory.location_lat, selected.inventory.location_lon],
-        14
-      );
+      if (selected) {
+        map.setView(
+          [selected.inventory.location_lat, selected.inventory.location_lon],
+          14
+        );
+      }
     }
   }, [map, props.complexes, props.hostid]);
 

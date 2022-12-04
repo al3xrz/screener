@@ -33,6 +33,8 @@ export function iconMarkerColor(complex) {
       case 5:
         markerColor = "red";
         break;
+      default:
+        markerColor = "green";
     }
   }
 
