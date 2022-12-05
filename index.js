@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
 
-app.use("/map", viewRouter);
+app.use("/", viewRouter);
 app.use("/api", apiRouter);
 
 
