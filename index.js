@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const viewRouter = require("./routers/view.router");
 const apiRouter = require("./routers/api.router");
+const resultsRouter = require("./routers/results.router")
+
 
 const app = express();
 app.use(cors());
@@ -13,6 +15,7 @@ app.use(cors());
 
 app.use("/", viewRouter);
 app.use("/api", apiRouter);
+app.use("/results", resultsRouter);
 
 
 app.listen(process.env.EXPRESS_PORT, () => {

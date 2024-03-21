@@ -5,6 +5,9 @@ const { zabbixLogout, zabbixLogin } = require("../helpers/zabbix/zabbix");
 const GROUP_NAME_PVF = "Комплексы ФВФ";
 const GROUP_NAME_CODD = "ЦОДД";
 const GROUP_NAME_CODD_NEW = "ЦОДД-NEW";
+const GROUP_NAME_UPRDOR = "УпрДор";
+
+
 
 function getMaxPriority(complex) {
   let priorities = complex.triggers.map(trigger => parseInt(trigger.priority, 10));
@@ -37,6 +40,10 @@ async function getFullState() {
     ...((await getGroupInfo(GROUP_NAME_PVF)).map((complex) => ({
       ...complex,
       type: "base",
+    }))),
+    ...((await getGroupInfo(GROUP_NAME_UPRDOR)).map((complex) => ({
+      ...complex,
+      type: "uprdor",
     }))),
     ...((await getGroupInfo(GROUP_NAME_CODD)).map((complex) => ({
       ...complex,

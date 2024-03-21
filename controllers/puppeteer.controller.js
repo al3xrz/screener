@@ -15,7 +15,7 @@ async function createScreenshot(hostid) {
     timeout : 100000
   });
   await delay(1000)
-  const fileName = `screen_${Date.now()}.jpg`;
+  const fileName = `screen_${hostid}_${Date.now()}.jpg`;
   await page.screenshot({
     path: path.resolve(__dirname, `../public/results/${fileName}`),
     quality : 100,
