@@ -6,6 +6,9 @@ const GROUP_NAME_PVF = "Комплексы ФВФ";
 const GROUP_NAME_CODD = "ЦОДД";
 const GROUP_NAME_CODD_NEW = "ЦОДД-NEW";
 const GROUP_NAME_UPRDOR = "УпрДор";
+const GROUP_NAME_CODD_OVN = "ЦОДД КАМЕРЫ ОВН";
+const GROUP_NAME_SUPP = "Пешеходные переходы";
+
 
 
 
@@ -52,6 +55,14 @@ async function getFullState() {
     ...((await getGroupInfo(GROUP_NAME_CODD_NEW)).map((complex) => ({
       ...complex,
       type: "coddN",
+    }))),
+    ...((await getGroupInfo(GROUP_NAME_CODD_OVN)).map((complex) => ({
+      ...complex,
+      type: "coddOVN",
+    }))),
+    ...((await getGroupInfo(GROUP_NAME_SUPP)).map((complex) => ({
+      ...complex,
+      type: "supp",
     }))),
   ].map((complex) => {
     return {
