@@ -2,11 +2,13 @@
 .env
 node_modules
 
+/public/results
 
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
+.jpg
 
 # testing
 /coverage

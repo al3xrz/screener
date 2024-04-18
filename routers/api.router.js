@@ -19,7 +19,7 @@ router.get("/screenshot/id/:hostid", async (req, res) => {
   try {
     const fileName = await createScreenshot(req.params.hostid);
     //res.sendFile(path.resolve(`public/results/${fileName}`));
-    res.status(200).json({path : `public/results/${fileName}`})
+    res.status(200).json({path : `results/${fileName}`})
   } catch(e) {
     res.status(400).json({Error : e.message});
   }

@@ -12,9 +12,9 @@ async function createScreenshot(hostid) {
   
   await page.waitForSelector(".leaflet-popup-content", {
     visible: true,
-    timeout : 100000
+    timeout : 500000
   });
-  await delay(1000)
+  await delay(3000)
   const fileName = `screen_${hostid}_${Date.now()}.jpg`;
   await page.screenshot({
     path: path.resolve(__dirname, `../public/results/${fileName}`),
