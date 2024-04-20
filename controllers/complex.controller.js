@@ -8,6 +8,10 @@ const GROUP_NAME_CODD_NEW = "ЦОДД-NEW";
 const GROUP_NAME_UPRDOR = "УпрДор";
 const GROUP_NAME_CODD_OVN = "ЦОДД КАМЕРЫ ОВН";
 const GROUP_NAME_SUPP = "Пешеходные переходы";
+const GROUP_NAME_VSC = "Перекрестки VSC"
+const GROUP_NAME_AXIS = "Перекрестки Axis"
+const GROUP_NAME_CROSSROADS = "Перекрестки"
+
 
 
 
@@ -36,49 +40,61 @@ function problemMutator(trigger) {
   return null;
 }
 
-async function getFullState() {
+async function getFullState(hostid) {
   await zabbixLogin();
 
-  const state = [
-    ...((await getGroupInfo(GROUP_NAME_PVF)).map((complex) => ({
+  const host = (await getHostInfo(hostid))[0]
+  const type = host.tags.find(tag => tag.tag === "type").value
+  console.log(type)
+  let state = []
+  switch (type) {
+    case "pvf": state = [...((await getGroupInfo(GROUP_NAME_PVF)).map((complex) => ({
       ...complex,
       type: "base",
-    }))),
-    ...((await getGroupInfo(GROUP_NAME_UPRDOR)).map((complex) => ({
+    })))]; break;
+
+    case "uprdor": state = [...((await getGroupInfo(GROUP_NAME_UPRDOR)).map((complex) => ({
       ...complex,
       type: "uprdor",
-    }))),
-    ...((await getGroupInfo(GROUP_NAME_CODD)).map((complex) => ({
+    })))]; break;
+
+    case "codd": [...((await getGroupInfo(GROUP_NAME_CODD)).map((complex) => ({
       ...complex,
       type: "codd",
     }))),
     ...((await getGroupInfo(GROUP_NAME_CODD_NEW)).map((complex) => ({
       ...complex,
       type: "coddN",
-    }))),
-    ...((await getGroupInfo(GROUP_NAME_CODD_OVN)).map((complex) => ({
-      ...complex,
-      type: "coddOVN",
-    }))),
-    ...((await getGroupInfo(GROUP_NAME_SUPP)).map((complex) => ({
+    }))),]; break;
+
+    case "vsc": break;
+    case "axis": break;
+    case "pp": state = [...((await getGroupInfo(GROUP_NAME_SUPP)).map((complex) => ({
       ...complex,
       type: "supp",
-    }))),
-  ].map((complex) => {
+    }))),]; break;
+    case "camera_ovn": state = [...((await getGroupInfo(GROUP_NAME_CODD_OVN)).map((complex) => ({
+      ...complex,
+      type: "codd_ovn",
+    }))),]; break;
+
+  }
+
+  state = state.map((complex) => {
     return {
-      type : complex.type,
+      type: complex.type,
       hostid: complex.hostid,
       name: complex.name,
       host: complex.host,
       problems: complex.triggers.map((trigger) => {
         return problemMutator(trigger);
       }),
-      priority : getMaxPriority(complex),
+      priority: getMaxPriority(complex),
       inventory: complex.inventory,
       macros: complex.macros,
       violations: violationsFixations(complex).violations,
       fixations: violationsFixations(complex).fixations,
-      lastUpdate : Date.now()
+      lastUpdate: Date.now()
     };
   });
 

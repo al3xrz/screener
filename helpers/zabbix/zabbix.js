@@ -245,6 +245,7 @@ async function getHostsByID(hostIDs) {
                                 "macro",
                                 "value"
                             ],
+                            "selectTags" : "extend",
                             "selectInventory" : ["location", "location_lat", "location_lon"],
                             "selectItems" : [
                                 "key_",

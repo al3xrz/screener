@@ -4,12 +4,12 @@ const { createScreenshot } = require("../controllers/puppeteer.controller");
 
 const router = Router();
 
-router.get("/state", async (_, res) => {
+router.get("/state/id/:hostid", async (req, res) => {
   try {
-    const state = await getFullState();
+    const state = await getFullState(req.params.hostid);
     res.status(200).json(state);
-  } catch(e) {
-    res.status(400).json({Error : e.message});
+  } catch (e) {
+    res.status(400).json({ Error: e.message });
   }
 });
 
@@ -19,9 +19,11 @@ router.get("/screenshot/id/:hostid", async (req, res) => {
   try {
     const fileName = await createScreenshot(req.params.hostid);
     //res.sendFile(path.resolve(`public/results/${fileName}`));
-    res.status(200).json({path : `results/${fileName}`})
-  } catch(e) {
-    res.status(400).json({Error : e.message});
+
+    res.status(200).json({ path: `results/${fileName}` })
+
+  } catch (e) {
+    res.status(400).json({ Error: e.message });
   }
 });
 
