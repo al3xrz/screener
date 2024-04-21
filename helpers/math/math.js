@@ -39,6 +39,13 @@ function violationsFixations(complex) {
         return { violations, fixations };
     }
 
+    if (complex.items.find(item => item.key_ === 'db.odbc.get[dataF,{$ODBC_BASE}]')) {
+        const fixations = complex.items.filter(item => item.key_ === "db.odbc.get[dataF,{$ODBC_BASE}]").length > 0 ? complex.items.filter(item => item.key_ === "db.odbc.get[dataF,{$ODBC_BASE}]")[0].lastvalue : 0;
+        const violations = complex.items.filter(item => item.key_ === "db.odbc.get[data,{$ODBC_BASE}]").length > 0 ? complex.items.filter(item => item.key_ === "db.odbc.get[data,{$ODBC_BASE}]")[0].lastvalue : 0;
+        return { violations, fixations };
+    }
+
+
     const fixations = complex.items.filter(item => item.key_ === "Ptolemey.todays_passages").length > 0 ? complex.items.filter(item => item.key_ === "Ptolemey.todays_passages")[0].lastvalue : 0;
     const violations = complex.items.filter(item => item.key_ === "Ptolemey.todays_violations").length > 0 ? complex.items.filter(item => item.key_ === "Ptolemey.todays_violations")[0].lastvalue : 0;
 

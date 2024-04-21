@@ -11,7 +11,7 @@ import PopupContent from "./PopupContent";
 
 export default function Markers(props) {
   const map = useMap();
-
+  console.log(props.complexes)
   const markers = props.complexes.map((complex) => {
     if (complex.hostid === props.hostid) {
       return (

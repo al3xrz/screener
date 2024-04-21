@@ -9,8 +9,8 @@ import Markers from "./Markers";
 import axios from "axios";
 
 export default function Map(props) {
-  // const apiURI = "http://127.0.0.1:5002";
-  const apiURI = "";
+  const apiURI = "http://127.0.0.1:5002";
+  // const apiURI = "";
 
   const [complexes, setComplexes] = useState([]);
   const params = useParams();
@@ -23,6 +23,7 @@ export default function Map(props) {
       .get(apiURI + `/api/state/id/${params.id}`)
       .then((response) => {
         setComplexes(response.data);
+        console.log("complexes in Map", response.data)
         console.log("Markers ready");
       })
       .catch((error) => {

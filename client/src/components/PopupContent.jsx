@@ -22,6 +22,19 @@ function PopupContent(props) {
       </span>
       <br />
       <br />
+      {
+        props.complex.child ?
+          props.complex.child.name : ""
+      }
+      <br />
+      {
+        props.complex.child.problems.map(problem => {
+          return (<div>
+            {problem.name} : {problem.duration}
+          </div>)
+        })
+      }
+      <br />
       {props.complex.problems.length === 0 ? (
         <span style={{ color: "green" }}>
           {" "}
@@ -39,7 +52,7 @@ function PopupContent(props) {
               </>
             );
           }
-        return false;
+          return false;
         })
       )}
     </div>
