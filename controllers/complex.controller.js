@@ -91,7 +91,7 @@ async function getFullState(hostid) {
       crossroad.child.problems = crossroad.child.triggers.map((trigger) => {
         return problemMutator(trigger);
       })
-      crossroad.hostid = hostid
+      crossroad.hostid = hostid // подмена hostid 
       state = crossroads
 
       break;

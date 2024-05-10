@@ -9,8 +9,8 @@ import Markers from "./Markers";
 import axios from "axios";
 
 export default function Map(props) {
-  const apiURI = "http://127.0.0.1:5002";
-  // const apiURI = "";
+  // const apiURI = "http://127.0.0.1:5002";
+  const apiURI = "";
 
   const [complexes, setComplexes] = useState([]);
   const params = useParams();
