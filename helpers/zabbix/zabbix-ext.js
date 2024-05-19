@@ -46,7 +46,9 @@ async function getGroupInfo(groupName) {
 
 }
 
+
+
 module.exports = {
     getGroupInfo,
-    getHostInfo
+    getHostInfo,
 }

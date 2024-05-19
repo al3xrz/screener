@@ -41,6 +41,11 @@ function problemMutator(trigger) {
   return null;
 }
 
+
+
+
+
+
 async function getFullState(hostid) {
   await zabbixLogin();
 
