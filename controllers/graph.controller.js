@@ -2,22 +2,26 @@ const { zabbixLogin, zabbixLogout } = require("../helpers/zabbix/zabbix");
 const { createWriteStream } = require("fs")
 const { Readable } = require("stream")
 const path = require("path")
-
+const fetch = require("node-fetch");
+const { response } = require("express");
+const { writeFile } = require('fs').promises;
 
 async function downloadGraph(graphid, width = 1200, height = 600, fileName) {
 
+    console.log(process.env.Z_API_KEY)
     const resp = await fetch(`${process.env.Z_SERVER}/chart2.php?graphid=${graphid}&from=now-24h&to=now&height=${height}&width=${width}&profileIdx=web.charts.filter&_=wmv2jkim`, {
         headers: {
             Cookie: `zbx_sessionid=${process.env.Z_API_KEY}`,
             Accept: "*/*"
         },
     })
-    console.log(resp.body)
+    // console.log("resp", resp)
 
     if (resp.ok && resp.body) {
         console.log("Writing to file:", fileName);
-        let writer = createWriteStream(fileName);
-        Readable.fromWeb(resp.body).pipe(writer);
+        const buffer = await resp.buffer();
+        await writeFile(fileName, buffer);
+
     }
 }
 
@@ -53,6 +57,7 @@ async function getGraphs(hostid) {
             let fileName = `screen_${hostid}_${graphid}_${Date.now()}.png`
             let fullName = path.resolve(__dirname, "..", "public", "results", fileName)
             names.push(fileName)
+            console.log(fullName)
             await downloadGraph(graphid, 800, 400, fullName)
         }
 
